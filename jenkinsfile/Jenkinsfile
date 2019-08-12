@@ -33,7 +33,7 @@ node
 	    sshagent(credentials : ['ssh-service.reto-mch.name']) {
 	        sh 'scp docker/deploy_service.sh ec2-user@ip-172-31-85-245.ec2.internal:deploy_service.sh'
 	        sh 'ssh -o StrictHostKeyChecking=no ec2-user@ip-172-31-85-245.ec2.internal chmod 750 deploy_service.sh'
-            sh 'ssh -o StrictHostKeyChecking=no ec2-user@ip-172-31-85-245.ec2.internal deploy_service.sh'
+            sh 'ssh -o StrictHostKeyChecking=no ec2-user@ip-172-31-85-245.ec2.internal ./deploy_service.sh'
         }
 	}
 }
