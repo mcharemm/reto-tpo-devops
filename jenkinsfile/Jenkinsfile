@@ -25,8 +25,8 @@ node
         sh command_build_image
 	}
 	stage("Image Push"){
-        docker.withRegistry('container_registry', 'ecr:us-east-1:AWS-reto') {
-            docker.image('image_name').push()
+        docker.withRegistry(container_registry, 'ecr:us-east-1:AWS-reto') {
+            docker.image(image_name).push()
         }
 	}
 	stage("Deploy Service"){
