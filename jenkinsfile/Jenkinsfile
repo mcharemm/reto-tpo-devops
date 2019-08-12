@@ -7,7 +7,7 @@ node
     def container_registry = 'https://134219192027.dkr.ecr.us-east-1.amazonaws.com'
     def image_name = '134219192027.dkr.ecr.us-east-1.amazonaws.com/reto-tpo/service-clientes';
     def branch_name = 'master';
-    def command_compile = 'mvn clean install verify sonar:sonar -Dsonar.url=' + sonar_url + '-Dsonar.login=' + sonar_token';
+    def command_compile = 'mvn clean install verify sonar:sonar -Dsonar.url=' + sonar_url + '-Dsonar.login=' + sonar_token;
     def command_build_image = 'docker build -t 134219192027.dkr.ecr.us-east-1.amazonaws.com/reto-tpo/service-clientes \
                                                 -f docker/Dockerfile \
                                                 . '
