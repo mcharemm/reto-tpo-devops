@@ -2,7 +2,7 @@ node
 {
     cleanWs()
     def url_base = 'https://github.com/mcharemm/reto-tpo-cliente.git';
-    def sonar_url = 'https://sonar.reto-mch.internal';
+    def sonar_url = 'http://sonar.reto-mch.internal:9000';
     def sonar_token = '0aef877a41be42d5c2cd033440bd4a25977db0d1';
     def container_registry = 'https://134219192027.dkr.ecr.us-east-1.amazonaws.com'
     def image_name = '134219192027.dkr.ecr.us-east-1.amazonaws.com/reto-tpo/service-clientes';
