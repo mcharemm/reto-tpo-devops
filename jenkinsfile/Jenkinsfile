@@ -31,10 +31,9 @@ node
 	}
 	stage("Deploy Service"){
 	    sshagent(credentials : ['ssh-service.reto-mch.name']) {
-	        sh 'ssh -o StrictHostKeyChecking=no ec2-user@ip-172-31-85-245.ec2.internal uptime'
-	        sh 'ssh -v ec2-user@ip-172-31-85-245.ec2.internal'
+	        sh 'ssh -o StrictHostKeyChecking=no -v ec2-user@ip-172-31-85-245.ec2.internal uptime'
 	        sh 'scp docker/deploy_service.sh ec2-user@ip-172-31-85-245.ec2.internal:/home/ec2-user/deploy.sh'
-            sh command_deploy
+            sh 'ssh -o StrictHostKeyChecking=no ec2-user@ip-172-31-85-245.ec2.internal:deploy_service.sh uptime'
         }
 	}
 }
