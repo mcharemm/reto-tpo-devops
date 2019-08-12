@@ -17,7 +17,9 @@ node
 	    git branch: branch_name, credentialsId: 'GIT', url: url_base;
 	}
 	stage("Build"){
-	    sh command_compile
+	    withMaven(maven: 'maven 3.6'){
+            sh command_compile
+	    }
 	}
 	stage("Image Build"){
         sh command_build_image
