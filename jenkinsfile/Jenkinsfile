@@ -13,21 +13,21 @@ node
                                                 . '
     def command_deploy = 'ssh ec2-user@ip-172-31-85-245.ec2.internal:deploy_service.sh'
 
-	Stage('Checkout'){
+	stage('Checkout'){
 	    git branch: branch_name, credentialsId: 'GIT', url: url_base;
 	}
-	Stage("Build"){
+	stage("Build"){
 	    sh command_compile
 	}
-	Stage("Image Build"){
+	stage("Image Build"){
         sh command_build_image
 	}
-	Stage("Image Push"){
+	stage("Image Push"){
         docker.withRegistry('container_registry', 'ecr:us-east-1:AWS-reto') {
             docker.image('image_name').push()
         }
 	}
-	Stage("Deploy Service"){
+	stage("Deploy Service"){
 	    sh 'scp docker/deploy.sh ec2-user@ip-172-31-85-245.ec2.internal:/home/ec2-user/deploy.sh'
         sh command_deploy
 	}
