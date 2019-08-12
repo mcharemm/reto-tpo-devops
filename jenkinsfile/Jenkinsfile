@@ -1,0 +1,34 @@
+node
+{
+    cleanWs()
+    def url_base = 'https://github.com/mcharemm/reto-tpo-cliente.git';
+    def sonar_url = 'https://sonar.reto-mch.name';
+    def sonar_token = '0aef877a41be42d5c2cd033440bd4a25977db0d1';
+    def container_registry = 'https://134219192027.dkr.ecr.us-east-1.amazonaws.com'
+    def image_name = '134219192027.dkr.ecr.us-east-1.amazonaws.com/reto-tpo/service-clientes';
+    def branch_name = 'master';
+    def command_compile = 'mvn clean install verify sonar:sonar -Dsonar.url=sonar_url -Dsonar.login=sonar_token';
+    def command_build_image = 'docker build -t 134219192027.dkr.ecr.us-east-1.amazonaws.com/reto-tpo/service-clientes \
+                                                -f docker/Dockerfile \
+                                                . '
+    def command_deploy = 'ssh ec2-user@ip-172-31-85-245.ec2.internal:deploy_service.sh'
+
+	Stage('Checkout'){
+	    git branch: branch_name, credentialsId: 'GIT', url: url_base;
+	}
+	Stage("Build"){
+	    sh command_compile
+	}
+	Stage("Image Build"){
+        sh command_build_image
+	}
+	Stage("Image Push"){
+        docker.withRegistry('container_registry', 'ecr:us-east-1:AWS-reto') {
+            docker.image('image_name').push()
+        }
+	}
+	Stage("Deploy Service"){
+	    sh 'scp docker/deploy.sh ec2-user@ip-172-31-85-245.ec2.internal:/home/ec2-user/deploy.sh'
+        sh command_deploy
+	}
+}
