@@ -30,7 +30,9 @@ node
         }
 	}
 	stage("Deploy Service"){
-	    sh 'scp docker/deploy.sh ec2-user@ip-172-31-85-245.ec2.internal:/home/ec2-user/deploy.sh'
-        sh command_deploy
+	    sshagent(credentials : ['ssh-service.reto-mch.name']) {
+	        sh 'scp docker/deploy.sh ec2-user@ip-172-31-85-245.ec2.internal:/home/ec2-user/deploy.sh'
+            sh command_deploy
+        }
 	}
 }
